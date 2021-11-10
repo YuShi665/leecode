@@ -58,6 +58,7 @@ class Solution {
             int left = i+1;
             int right = nums.length-1;
             while(left<right){
+                //优化 最大最小值edge case
 
                 int min = nums[i]+nums[left]+nums[left+1];
                 if(target<min){
@@ -91,12 +92,16 @@ class Solution {
 
                 }else if(sum>target){
                     right--;
+                    //这个地方错了错在 right -1 
+                    //93行首先向左挪1位 后我们实际要看向右的一位是否相同 所有应写为right+1
                     while(left<right && nums[right]==nums[right-1]){
                         right--;
                     }
                 }
 
             }
+            //每次i的循环已经找到了所有的可能答案，再次出现连续相同i 找到的答案集合小于已经找到在第一次中的答案集合
+            //为什么因为array 向右move 剩余可选数越来越少
             while(i<nums.length-2 && nums[i]==nums[i+1]){
                 i++;
             }
